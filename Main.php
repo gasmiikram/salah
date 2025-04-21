@@ -86,7 +86,7 @@ Théorie des Langages: Automata theory,
 regular expressions, and grammars.
 
 Instructions: Please complete all 
-questions in 90 minutes. Refer to 
+questions in 60 minutes. Refer to 
 your study materials.<li><a href="exam1.html">Click here to start THL</a></li>
           
           </pre>
@@ -103,7 +103,7 @@ Focus on classes, inheritance, and encapsulation.
 
 Instructions: The exam consists 
 of multiple choice questions. 
-60-minute time limit.<li><a href="exam2.html">Click here to start OOP</a></li>
+90-minute time limit.<li><a href="exam2.html">Click here to start OOP</a></li>
           </pre>
         </div>
       </div>
@@ -170,9 +170,10 @@ challenges. The exam is 120 minutes long.<li><a href="exam3.html">Click here to 
 
   <!-- Contact Info -->
   <div class="mt-3 text-start">
-    <p><span>👤</span> John Doe</p>
-    <p><span>✉</span> john.doe@email.com</p>
-    <p><span>📚</span> Group: A, Section: 1</p>
+    <p><span>👤</span> GASMI salah eddine / benoumessad Mohamed el amine</p>
+    <p><span>✉</span> sgasmi70@gmail.com / 0659415261</p>
+    <p><span>📚</span> Group: 10, Section: 2</p>
+    
   </div>
   
 </div>

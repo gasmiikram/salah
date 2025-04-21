@@ -19,15 +19,8 @@
         font-family: "Lobster Two", cursive;
         color: rgb(216, 216, 216);
         text-align: center;
-      }
-      .warning {
-        animation: flash 1s infinite;
-        color: red !important;
-      }
-      @keyframes flash {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
+    }
+    
     </style>
 </head>
 
@@ -46,7 +39,7 @@
                 <div class="d-flex flex-column w-100 align-items-center">
                     <div class="d-flex align-items-center justify-content-center gap-3">
                         <img src="img/3.png" style="width: 60px; height: auto;" />
-                        <h4 class="m-0">University of Boumerdes Exam Platform / Exam 1</h4>
+                        <h4 class="m-0">University of Boumerdes Exam Platform / OOP Exam</h4>
                     </div>
                 </div>
             </nav>
@@ -65,22 +58,25 @@
             <p>➡️ Once submitted, answers can't be changed.</p>
             <p>➡️ Each question might have multiple correct answers.</p>
             <p>➡️ The timer is located on the left.</p>
+
         </aside>
 
         <!-- Main Content: Exercises -->
-        <form id="exam-form" action="submit_note.php" method="POST" onsubmit="return confirmSubmit()">
+        <form id="exam-form" action="submit_note.php" method="POST">
           <main class="exam-content">
-            <input type="hidden" name="exam_name" value="WEB" required>
+            <input type="hidden" name="exam_name" value="OOP" required><br>
         
             <section class="exercise" id="exercise1">
               <h2><strong>Exercise 1: MCQs</strong></h2>
               <hr />
               <article>
-                <p>1. What is 2 + 2?</p><br>
+                <p>1. Which of the following are pillars of Object-Oriented Programming?</p><br>
                 <ul>
-                  <li><label><input type="checkbox" name="q1" value="3"> 3</label></li>
-                  <li><label><input type="checkbox" name="q1" value="4"> 4</label></li>
-                  <li><label><input type="checkbox" name="q1" value="5"> 5</label></li>
+                  <li><label><input type="checkbox" name="q1" value="Inheritance"> Inheritance</label></li>
+                  <li><label><input type="checkbox" name="q1" value="Encapsulation"> Encapsulation</label></li>
+                  <li><label><input type="checkbox" name="q1" value="Polymorphism"> Polymorphism</label></li>
+                  <li><label><input type="checkbox" name="q1" value="Abstraction"> Abstraction</label></li>
+                  <li><label><input type="checkbox" name="q1" value="Compilation"> Compilation</label></li>
                 </ul>
               </article>
             </section>
@@ -89,10 +85,10 @@
               <h2><strong>Exercise 2: True/False</strong></h2>
               <hr />
               <article>
-                <p>2. The earth is flat.</p><br>
+                <p>2. In OOP, a class can inherit from multiple parent classes.</p><br>
                 <ul>
-                  <li><label><input type="radio" name="q2" value="true"> True</label></li>
-                  <li><label><input type="radio" name="q2" value="false"> False</label></li>
+                  <li><label><input type="radio" name="q2" value="true"> True (depends on the language)</label></li>
+                  <li><label><input type="radio" name="q2" value="false"> False (never possible)</label></li>
                 </ul>
               </article>
             </section>
@@ -101,10 +97,12 @@
               <h2><strong>Exercise 3: MCQs</strong></h2>
               <hr />
               <article>
-                <p>3. Which is a programming language?</p><br>
+                <p>3. Which of these are valid OOP concepts?</p><br>
                 <ul>
-                  <li><label><input type="checkbox" name="q3" value="Python"> Python</label></li>
-                  <li><label><input type="checkbox" name="q3" value="Banana"> Banana</label></li>
+                  <li><label><input type="checkbox" name="q3" value="Method Overriding"> Method Overriding</label></li>
+                  <li><label><input type="checkbox" name="q3" value="Function Currying"> Function Currying</label></li>
+                  <li><label><input type="checkbox" name="q3" value="Operator Overloading"> Operator Overloading</label></li>
+                  <li><label><input type="checkbox" name="q3" value="Pure Functions"> Pure Functions</label></li>
                 </ul>
               </article>
             </section>
@@ -120,8 +118,10 @@
         <!-- Timer Section (Right Sidebar) -->
         <aside id="timer-box">
             <h3>🕒 Timer</h3>
-            <div id="timer" class="timer">00:01:00</div>
+            <div id="timer" class="timer">00:01:30</div>
         </aside>
+
+       
 
         <!-- Sidebar (Profile and Navigation) -->
         <div id="side-bar" class="bg-dark-subtle text-dark-emphasis .bg-gradient" id="subMenu">
@@ -130,15 +130,17 @@
                     <img src="\php\img\18.png" alt="person" width="50" height="50" onclick="show()">
                     <ul>
                         <li><a href="Main.php">HOME</a></li>
-                        <li><a href="exam2.html">OOP</a></li>
-                        <li><a href="exam3.html">LTH</a></li>
+                        <li><a href="exam1.html">LTH</a></li>
+                        <li><a href="exam3.html">WAD</a></li>
                     </ul>
                 </div>
                 <div style="text-align:center;">
-                    <a href="Logout.php">Logout</a>              
+                    <a href="Logout.php">Logout</a>
+                                
                 </div>
             </nav>
         </div>
+
     </div>
 
     <!-- External Scripts -->
@@ -149,12 +151,11 @@
 
     <script>
       // Timer countdown
-      let totalSeconds = 60;
+      let totalSeconds = 90;
       const timerElement = document.getElementById('timer');
       const resultFooter = document.getElementById('result');
       const submitButton = document.getElementById('submit-btn');
       const scoreDisplay = document.getElementById('score-display');
-      let timeUp = false;
   
       const disableInputs = () => {
           document.querySelectorAll('input').forEach(input => input.disabled = true);
@@ -162,18 +163,18 @@
   
       const calculateScore = () => {
         let score = 0;
-        const totalQuestions = 3;
+        const totalQuestions = 3; // Total number of questions
     
         // Correct answers for each question
         const correctAnswers = {
-            q1: ['4'],
-            q2: 'false',
-            q3: ['Python']
+            q1: ['Inheritance', 'Encapsulation', 'Polymorphism', 'Abstraction'], // Correct answers for Question 1 (OOP pillars)
+            q2: 'true', // Correct answer for Question 2 (multiple inheritance depends on language)
+            q3: ['Method Overriding', 'Operator Overloading'] // Correct answers for Question 3 (OOP concepts)
         };
     
         // Reset previous styles before checking
         document.querySelectorAll('input').forEach(input => {
-            input.parentElement.style.color = '';
+            input.parentElement.style.color = ''; // Reset previous styles
         });
     
         let answerDetails = '';
@@ -196,14 +197,15 @@
             answerDetails += `<p>Q1: Incorrect</p>`;
         }
         
+    
         // Question 2 (radio button)
         const q2Answer = document.querySelector('input[name="q2"]:checked')?.value;
         if (q2Answer === correctAnswers.q2) {
-            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'green';
+            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'green'; // Correct
             score++;
             answerDetails += `<p>Q2: Correct answer: ${q2Answer}</p>`;
         } else if (q2Answer) {
-            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'red';
+            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'red'; // Incorrect
             answerDetails += `<p>Q2: Incorrect answer: ${q2Answer}</p>`;
         }
     
@@ -225,105 +227,122 @@
             answerDetails += `<p>Q3: Incorrect</p>`;
         }
     
-        // Calculate final grade
-        const grade = ((score / totalQuestions) * 100).toFixed(2);
+        // Update the result and score display without using innerHTML
+        resultFooter.textContent = `⏱️ Time's up! Your score: ${score} / ${totalQuestions}`;
+    
+        // Use textContent to update score
+        scoreDisplay.textContent = `Final Score: ${score} / ${totalQuestions}`;
+        const detailedAnswers = `\n${answerDetails}`;
+        scoreDisplay.textContent += detailedAnswers; // Append detailed answers to the score
+    
+        console.log(`Final Score: ${score}`); // Log score for debugging
+    };
+    
+    
+    // Get remaining time from localStorage
+let storedTime = localStorage.getItem('remainingTime');
+if (storedTime !== null) {
+    totalSeconds = parseInt(storedTime, 10);
+} else {
+    totalSeconds = 90; // Default start time (90 seconds)
+}
+
+    const countdown = setInterval(() => {
+      let minutes = Math.floor(totalSeconds / 60);
+      let seconds = totalSeconds % 60;
+      timerElement.textContent = `00:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      
+      // Save to localStorage
+      localStorage.setItem('remainingTime', totalSeconds);
+  
+      totalSeconds--;
+  
+      if (totalSeconds < 0) {
+          clearInterval(countdown);
+          disableInputs();
+          calculateScore();
+          localStorage.removeItem('remainingTime'); // Clear stored time on finish
+      }
+  }, 1000);
+  
+  
+      // Submit button functionality
+      submitButton.addEventListener('click', () => {
+        clearInterval(countdown);
+        disableInputs();
+        calculateScore();
+        localStorage.removeItem('remainingTime'); // clear saved timer
+        localStorage.clear(); // clear answers
+    });
+    
+      function calculateAndSubmit() {
+        let score = 0;
+        const total = 3;
+    
+        // Check answers for Q1 (OOP pillars)
+        const q1Correct = ['Inheritance', 'Encapsulation', 'Polymorphism', 'Abstraction'];
+        const q1Selected = [...document.querySelectorAll('input[name="q1"]:checked')].map(i => i.value);
+        const q1CorrectCount = q1Selected.filter(val => q1Correct.includes(val)).length;
+        const q1WrongCount = q1Selected.length - q1CorrectCount;
+        if (q1CorrectCount === 4 && q1WrongCount === 0) score++;
+    
+        // Check answer for Q2 (multiple inheritance)
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        if (q2 && q2.value === "true") score++;
+    
+        // Check answers for Q3 (OOP concepts)
+        const q3Correct = ['Method Overriding', 'Operator Overloading'];
+        const q3Selected = [...document.querySelectorAll('input[name="q3"]:checked')].map(i => i.value);
+        const q3CorrectCount = q3Selected.filter(val => q3Correct.includes(val)).length;
+        const q3WrongCount = q3Selected.length - q3CorrectCount;
+        if (q3CorrectCount === 2 && q3WrongCount === 0) score++;
+    
+        const grade = ((score / total) * 100).toFixed(2);
+    
+        document.getElementById("score-display").innerText = `Your Score: ${grade}%`;
         document.getElementById("grade").value = grade;
     
-        // Update display
-        const timeUpMessage = timeUp ? "⏱️ Time's up! " : "";
-        resultFooter.textContent = `${timeUpMessage}Your score: ${score} / ${totalQuestions}`;
-        scoreDisplay.innerHTML = `Final Score: ${score} / ${totalQuestions} (${grade}%)<br>${answerDetails}`;
-    
-        return grade;
-      };
-    
-      // Get remaining time from localStorage
-      let storedTime = localStorage.getItem('remainingTime');
-      if (storedTime !== null) {
-          totalSeconds = parseInt(storedTime, 10);
-      } else {
-          totalSeconds = 60;
+        // Finally, submit the form manually
+        document.getElementById("exam-form").action = "submit_note.php";
+        document.getElementById("exam-form").submit();
       }
+      
+  </script>
+  
+  <script>
+    // Save checkbox and radio values
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', () => {
+            if (input.type === 'checkbox') {
+                const checked = [...document.querySelectorAll(`input[name="${input.name}"]:checked`)].map(i => i.value);
+                localStorage.setItem(input.name, JSON.stringify(checked));
+            } else if (input.type === 'radio') {
+                localStorage.setItem(input.name, input.value);
+            }
+        });
+    });
 
-      const countdown = setInterval(() => {
-          let minutes = Math.floor(totalSeconds / 60);
-          let seconds = totalSeconds % 60;
-          timerElement.textContent = `00:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-          
-          // Add warning when time is low
-          if (totalSeconds <= 10) {
-              timerElement.classList.add('warning');
-          }
-          
-          // Save to localStorage
-          localStorage.setItem('remainingTime', totalSeconds);
-      
-          totalSeconds--;
-      
-          if (totalSeconds < 0) {
-              clearInterval(countdown);
-              timeUp = true;
-              disableInputs();
-              calculateScore();
-              localStorage.removeItem('remainingTime');
-              
-              // Auto-submit after 2 seconds (gives time to calculate score)
-              setTimeout(() => {
-                  document.getElementById("exam-form").submit();
-              }, 2000);
-          }
-      }, 1000);
-      
-      function confirmSubmit() {
-          // Only show confirmation for manual submissions
-          if (!timeUp) {
-              return confirm("Are you sure you want to submit your answers?");
-          }
-          return true;
-      }
-      
-      function calculateAndSubmit() {
-          if (confirmSubmit()) {
-              clearInterval(countdown);
-              disableInputs();
-              calculateScore();
-              localStorage.removeItem('remainingTime');
-              localStorage.clear();
-              
-              // Submit the form
-              document.getElementById("exam-form").submit();
-          }
-      }
-      
-      // Save checkbox and radio values
-      document.querySelectorAll('input').forEach(input => {
-          input.addEventListener('change', () => {
-              if (input.type === 'checkbox') {
-                  const checked = [...document.querySelectorAll(`input[name="${input.name}"]:checked`)].map(i => i.value);
-                  localStorage.setItem(input.name, JSON.stringify(checked));
-              } else if (input.type === 'radio') {
-                  localStorage.setItem(input.name, input.value);
-              }
-          });
-      });
+    // Restore saved answers on load
+    window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('input').forEach(input => {
+            if (input.type === 'checkbox') {
+                const saved = JSON.parse(localStorage.getItem(input.name) || '[]');
+                if (saved.includes(input.value)) input.checked = true;
+            } else if (input.type === 'radio') {
+                const saved = localStorage.getItem(input.name);
+                if (saved === input.value) input.checked = true;
+            }
+        });
+    });
+    submitButton.addEventListener('click', () => {
+      clearInterval(countdown);
+      disableInputs();
+      calculateScore();
+      localStorage.clear(); // <== this line clears answers
+  });
+  
+</script>
 
-      // Restore saved answers on load
-      window.addEventListener('DOMContentLoaded', () => {
-          document.querySelectorAll('input').forEach(input => {
-              if (input.type === 'checkbox') {
-                  const saved = JSON.parse(localStorage.getItem(input.name) || '[]');
-                  if (saved.includes(input.value)) input.checked = true;
-              } else if (input.type === 'radio') {
-                  const saved = localStorage.getItem(input.name);
-                  if (saved === input.value) input.checked = true;
-              }
-          });
-          
-          // Warn if time is low on page load
-          if (totalSeconds <= 10) {
-              timerElement.classList.add('warning');
-          }
-      });
-    </script>
 </body>
+
 </html>
