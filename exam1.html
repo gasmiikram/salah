@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Boumerdes Exam Platform</title>
+    <link rel="stylesheet" href="maincss.css" />
+    <link rel="icon" href="\php\img\3.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styl.css">
+    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="exam.css"/>
+    <link type="text/css" rel="stylesheet" href="https://odoocdn.com/web/assets/1/9b636e3/web.assets_frontend.min.css" />
+    <style>
+      h3, #timer-box, .exam-footer {
+        font-family: "Lobster Two", cursive;
+        color: rgb(216, 216, 216);
+        text-align: center;
+    }
+    
+    </style>
+</head>
+
+<body id="main1" class="text-white background-slider">
+
+    <div class="text-white body-home">
+        <!-- Header -->
+        <section class="pt-2 text-white text-center fade-in card border rounded-5 p-3 shadow box-area border-white bg-transparent sticky-top" id="first">
+            <nav class="navbar navbar-expand-lg w-100">
+                <!-- Left-side profile image -->
+                <div class="text-start ps-2">
+                    <img id="person" src="\php\img\18.png" alt="person" width="50" height="50" onclick="show()">
+                </div>
+
+                <!-- Centered logo, title, and links -->
+                <div class="d-flex flex-column w-100 align-items-center">
+                    <div class="d-flex align-items-center justify-content-center gap-3">
+                        <img src="img/3.png" style="width: 60px; height: auto;" />
+                        <h4 class="m-0">University of Boumerdes Exam Platform / Exam 1</h4>
+                    </div>
+                </div>
+            </nav>
+        </section>
+        <div class="nav mt-2 d-flex gap-3">
+          <a href="#exercise1" class="text-white text-decoration-none">Exercise 1</a>
+          <a href="#exercise2" class="text-white text-decoration-none">Exercise 2</a>
+          <a href="#exercise3" class="text-white text-decoration-none">Exercise 3</a>
+      </div>
+        <!-- Guidelines Section (Left Sidebar) -->
+        <aside id="guidelines">
+            <h3>Exam Guidelines</h3>
+            <p>➡️ Read all questions carefully.</p>
+            <p>➡️ Do not refresh the page during the exam.</p>
+            <p>➡️ Time is limited, manage it wisely.</p>
+            <p>➡️ Once submitted, answers can't be changed.</p>
+            <p>➡️ Each question might have multiple correct answers.</p>
+            <p>➡️ The timer is located on the left.</p>
+
+        </aside>
+
+        <!-- Main Content: Exercises -->
+        <form id="exam-form" action="submit_note.php" method="POST">
+          <main class="exam-content">
+            <input type="text" name="exam_name" value="WEB" required><br>
+        
+            <section class="exercise" id="exercise1">
+              <h2><strong>Exercise 1: MCQs</strong></h2>
+              <hr />
+              <article>
+                <p>1. What is 2 + 2?</p><br>
+                <ul>
+                  <li><label><input type="checkbox" name="q1" value="3"> 3</label></li>
+                  <li><label><input type="checkbox" name="q1" value="4"> 4</label></li>
+                  <li><label><input type="checkbox" name="q1" value="5"> 5</label></li>
+                </ul>
+              </article>
+            </section>
+        
+            <section class="exercise" id="exercise2">
+              <h2><strong>Exercise 2: True/False</strong></h2>
+              <hr />
+              <article>
+                <p>2. The earth is flat.</p><br>
+                <ul>
+                  <li><label><input type="radio" name="q2" value="true"> True</label></li>
+                  <li><label><input type="radio" name="q2" value="false"> False</label></li>
+                </ul>
+              </article>
+            </section>
+        
+            <section class="exercise" id="exercise3">
+              <h2><strong>Exercise 3: MCQs</strong></h2>
+              <hr />
+              <article>
+                <p>3. Which is a programming language?</p><br>
+                <ul>
+                  <li><label><input type="checkbox" name="q3" value="Python"> Python</label></li>
+                  <li><label><input type="checkbox" name="q3" value="Banana"> Banana</label></li>
+                </ul>
+              </article>
+            </section>
+          </main>
+          <footer class="exam-footer">
+            <footer id="result">Score will appear here.</footer>
+            <!-- Hidden input to send the grade -->
+            <input type="hidden" name="grade" id="grade">
+            <button id="submit-btn" type="button" onclick="calculateAndSubmit()">Submit</button>
+            <div id="score-display"></div>
+          </footer>
+        </form>
+        <!-- Timer Section (Right Sidebar) -->
+        <aside id="timer-box">
+            <h3>🕒 Timer</h3>
+            <div id="timer" class="timer">00:01:00</div>
+        </aside>
+
+       
+
+        <!-- Sidebar (Profile and Navigation) -->
+        <div id="side-bar" class="bg-dark-subtle text-dark-emphasis .bg-gradient" id="subMenu">
+            <nav>
+                <div class="profile">
+                    <img src="\php\img\18.png" alt="person" width="50" height="50" onclick="show()">
+                    <ul>
+                        <li><a href="Main.php">HOME</a></li>
+                        <li><a href="exam2.html">OOP</a></li>
+                        <li><a href="exam3.html">LTH</a></li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <a href="Logout.php">Logout</a>
+                                
+                </div>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- External Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script defer src="Etudjs.js"></script>
+
+    <script>
+      // Timer countdown
+      let totalSeconds = 60;
+      const timerElement = document.getElementById('timer');
+      const resultFooter = document.getElementById('result');
+      const submitButton = document.getElementById('submit-btn');
+      const scoreDisplay = document.getElementById('score-display');
+  
+      const disableInputs = () => {
+          document.querySelectorAll('input').forEach(input => input.disabled = true);
+      };
+  
+      const calculateScore = () => {
+        let score = 0;
+        const totalQuestions = 3; // Total number of questions
+    
+        // Correct answers for each question
+        const correctAnswers = {
+            q1: ['4'], // Correct answers for Question 1 (checkboxes)
+            q2: 'false', // Correct answer for Question 2 (radio button)
+            q3: ['Python'] // Correct answers for Question 3 (checkboxes)
+        };
+    
+        // Reset previous styles before checking
+        document.querySelectorAll('input').forEach(input => {
+            input.parentElement.style.color = ''; // Reset previous styles
+        });
+    
+        let answerDetails = '';
+    
+        // Question 1 (checkboxes)
+      // === Question 1 ===
+const q1Answers = [...document.querySelectorAll('input[name="q1"]:checked')].map(i => i.value);
+document.querySelectorAll('input[name="q1"]').forEach(input => {
+    if (correctAnswers.q1.includes(input.value)) {
+        input.parentElement.style.color = 'green';
+    } else if (input.checked) {
+        input.parentElement.style.color = 'red';
+    }
+});
+const allCorrectQ1 = q1Answers.every(val => correctAnswers.q1.includes(val));
+const noExtraQ1 = q1Answers.length === correctAnswers.q1.length;
+if (allCorrectQ1 && noExtraQ1 ) {
+    score++;
+    answerDetails += `<p>Q1: Correct</p>`;
+} else {
+    answerDetails += `<p>Q1: Incorrect</p>`;
+}
+        
+    
+        // Question 2 (radio button)
+        const q2Answer = document.querySelector('input[name="q2"]:checked')?.value;
+        if (q2Answer === correctAnswers.q2) {
+            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'green'; // Correct
+            score++;
+            answerDetails += `<p>Q2: Correct answer: ${q2Answer}</p>`;
+        } else if (q2Answer) {
+            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'red'; // Incorrect
+            answerDetails += `<p>Q2: Incorrect answer: ${q2Answer}</p>`;
+        }
+    
+       // === Question 3 ===
+const q3Answers = [...document.querySelectorAll('input[name="q3"]:checked')].map(i => i.value);
+document.querySelectorAll('input[name="q3"]').forEach(input => {
+    if (correctAnswers.q3.includes(input.value)) {
+        input.parentElement.style.color = 'green';
+    } else if (input.checked) {
+        input.parentElement.style.color = 'red';
+    }
+});
+const allCorrectQ3 = q3Answers.every(val => correctAnswers.q3.includes(val));
+const noExtraQ3 = q3Answers.length === correctAnswers.q3.length;
+if (allCorrectQ3 && noExtraQ3) {
+    score++;
+    answerDetails += `<p>Q3: Correct</p>`;
+} else {
+    answerDetails += `<p>Q3: Incorrect</p>`;
+}
+    
+        // Update the result and score display without using innerHTML
+        resultFooter.textContent = `⏱️ Time's up! Your score: ${score} / ${totalQuestions}`;
+    
+        // Use textContent to update score
+        scoreDisplay.textContent = `Final Score: ${score} / ${totalQuestions}`;
+        const detailedAnswers = `\n${answerDetails}`;
+        scoreDisplay.textContent += detailedAnswers; // Append detailed answers to the score
+    
+        console.log(`Final Score: ${score}`); // Log score for debugging
+    };
+    
+    
+    // Get remaining time from localStorage
+let storedTime = localStorage.getItem('remainingTime');
+if (storedTime !== null) {
+    totalSeconds = parseInt(storedTime, 10);
+} else {
+    totalSeconds = 60; // Default start time
+}
+
+    const countdown = setInterval(() => {
+      let minutes = Math.floor(totalSeconds / 60);
+      let seconds = totalSeconds % 60;
+      timerElement.textContent = `00:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      
+      // Save to localStorage
+      localStorage.setItem('remainingTime', totalSeconds);
+  
+      totalSeconds--;
+  
+      if (totalSeconds < 0) {
+          clearInterval(countdown);
+          disableInputs();
+          calculateScore();
+          localStorage.removeItem('remainingTime'); // Clear stored time on finish
+      }
+  }, 1000);
+  
+  
+      // Submit button functionality
+      submitButton.addEventListener('click', () => {
+        clearInterval(countdown);
+        disableInputs();
+        calculateScore();
+        localStorage.removeItem('remainingTime'); // clear saved timer
+        localStorage.clear(); // clear answers
+    });
+    
+      function calculateAndSubmit() {
+        let score = 0;
+        const total = 3;
+    
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        if (q1 && q1.value === "4") score++;
+    
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        if (q2 && q2.value === "false") score++;
+    
+        const q3 = document.querySelector('input[name="q3"][value="Python"]');
+        if (q3 && q3.checked) score++;
+    
+        const grade = ((score / total) * 100).toFixed(2);
+    
+        document.getElementById("score-display").innerText = `Your Score: ${grade}%`;
+        document.getElementById("grade").value = grade;
+    
+        // Finally, submit the form manually
+        document.getElementById("exam-form").action = "submit_note.php";
+        document.getElementById("exam-form").submit();
+      }
+      
+  </script>
+  
+  <script>
+    // Save checkbox and radio values
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', () => {
+            if (input.type === 'checkbox') {
+                const checked = [...document.querySelectorAll(`input[name="${input.name}"]:checked`)].map(i => i.value);
+                localStorage.setItem(input.name, JSON.stringify(checked));
+            } else if (input.type === 'radio') {
+                localStorage.setItem(input.name, input.value);
+            }
+        });
+    });
+
+    // Restore saved answers on load
+    window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('input').forEach(input => {
+            if (input.type === 'checkbox') {
+                const saved = JSON.parse(localStorage.getItem(input.name) || '[]');
+                if (saved.includes(input.value)) input.checked = true;
+            } else if (input.type === 'radio') {
+                const saved = localStorage.getItem(input.name);
+                if (saved === input.value) input.checked = true;
+            }
+        });
+    });
+    submitButton.addEventListener('click', () => {
+      clearInterval(countdown);
+      disableInputs();
+      calculateScore();
+      localStorage.clear(); // <== this line clears answers
+  });
+  
+</script>
+
+</body>
+
+</html>

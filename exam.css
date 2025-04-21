@@ -1,0 +1,172 @@
+
+  .nav{
+    position: fixed;
+    top: 150px; /* Adjust to prevent overlap with header */
+    left: 20px;
+    width: 150px; /* Adjust width */
+    height: calc(60vh - 80px); /* Take full height minus header */
+    overflow-y: auto; /* Make it scrollable if content is long */
+    padding: 20px;
+    background-color:  #007bff9c;
+    color: rgb(0, 0, 0);
+  }
+  /* Make the whole page a flex container */
+body {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  height: 100vh;
+  margin: 0;
+}
+
+/* Header - sticky at top */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Sidebar (Left - guidelines) */
+#guidelines {
+  position: fixed;
+  top: 150px; /* Adjust to prevent overlap with header */
+  left: 200px;
+  width: 300px; /* Adjust width */
+  height: calc(60vh - 80px); /* Take full height minus header */
+  overflow-y: auto; /* Make it scrollable if content is long */
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+
+/* Main content (Right side) */
+.exam-content {
+  margin-left: 520px; /* Make space for the left sidebar */
+  flex-grow: 1;
+  margin-top: 40px;
+  overflow-y: auto; /* Make the main content scrollable */
+  padding: 20px;
+  height: calc(100vh - 120px); /* Adjust for header and footer */
+  background-color: rgba(255, 255, 255, 0.264);
+  backdrop-filter: blur(10px);
+  
+}
+
+/* Timer section */
+#timer-box {
+  position: fixed;
+  left: 220px;
+  top: 700px; /* Same as guidelines to align vertically */
+  width: 200px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  z-index: 10;
+}
+
+/* Footer */
+.exam-footer {
+  position: relative;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #333;
+  color: rgb(158, 158, 158);
+  text-align: center;
+}
+
+footer #result {
+  font-size: 18px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  #guidelines, .exam-content {
+      margin-left: 0; /* Full width layout for smaller screens */
+  }
+}
+
+
+
+/* EXERCISES */
+.exam-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.exercise {
+  background: rgba(0, 0, 0, 0.342);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exercise:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+}
+
+.exercise h2 {
+  color: #ffffff;
+  margin-top: 0;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* BUTTON */
+#submit-btn {
+  align-self: center;
+  padding: 0.75rem 2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#submit-btn:hover {
+  background-color: #0056b3;
+}
+
+/* FOOTER */
+.exam-footer {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+ /* Adjust label and checkbox to be aligned in the same line */
+ .exercise ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.exercise ul li {
+  display: flex;
+  align-items: center; /* Align the checkbox and label in the same line */
+  gap: 10px; /* Space between checkbox and label */
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 20px; /* Set a specific size for the checkbox */
+  height: 20px;
+  margin: 0; /* Remove any default margins */
+}
+
+label {
+  font-size: 1.2rem; /* Make the label bigger */
+  display: inline-block;
+  cursor: pointer;
+}
+
+label{
+  color: #ffffff;
+}
