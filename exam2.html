@@ -163,79 +163,72 @@
   
       const calculateScore = () => {
         let score = 0;
-        const totalQuestions = 3; // Total number of questions
     
-        // Correct answers for each question
         const correctAnswers = {
-            q1: ['Inheritance', 'Encapsulation', 'Polymorphism', 'Abstraction'], // Correct answers for Question 1 (OOP pillars)
-            q2: 'true', // Correct answer for Question 2 (multiple inheritance depends on language)
-            q3: ['Method Overriding', 'Operator Overloading'] // Correct answers for Question 3 (OOP concepts)
+            q1: ['Inheritance', 'Encapsulation', 'Polymorphism', 'Abstraction'],
+            q2: 'true',
+            q3: ['Method Overriding', 'Operator Overloading']
         };
     
-        // Reset previous styles before checking
         document.querySelectorAll('input').forEach(input => {
             input.parentElement.style.color = ''; // Reset previous styles
         });
     
         let answerDetails = '';
     
-        // Question 1 (checkboxes)
+        // ===== Question 1 =====
         const q1Answers = [...document.querySelectorAll('input[name="q1"]:checked')].map(i => i.value);
+        const q1Correct = correctAnswers.q1;
+        const q1ScorePerCorrect = 1 / q1Correct.length; // 1 point max, divide by 4
+        q1Answers.forEach(ans => {
+            if (q1Correct.includes(ans)) {
+                score += q1ScorePerCorrect;
+            }
+        });
         document.querySelectorAll('input[name="q1"]').forEach(input => {
-            if (correctAnswers.q1.includes(input.value)) {
+            if (q1Correct.includes(input.value)) {
                 input.parentElement.style.color = 'green';
             } else if (input.checked) {
                 input.parentElement.style.color = 'red';
             }
         });
-        const allCorrectQ1 = q1Answers.every(val => correctAnswers.q1.includes(val));
-        const noExtraQ1 = q1Answers.length === correctAnswers.q1.length;
-        if (allCorrectQ1 && noExtraQ1) {
-            score++;
-            answerDetails += `<p>Q1: Correct</p>`;
-        } else {
-            answerDetails += `<p>Q1: Incorrect</p>`;
-        }
-        
+        answerDetails += `<p>Q1: You got ${q1Answers.filter(a => q1Correct.includes(a)).length}/${q1Correct.length} correct</p>`;
     
-        // Question 2 (radio button)
+        // ===== Question 2 =====
         const q2Answer = document.querySelector('input[name="q2"]:checked')?.value;
         if (q2Answer === correctAnswers.q2) {
-            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'green'; // Correct
-            score++;
-            answerDetails += `<p>Q2: Correct answer: ${q2Answer}</p>`;
+            score += 1; // Full point
+            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'green';
+            answerDetails += `<p>Q2: Correct</p>`;
         } else if (q2Answer) {
-            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'red'; // Incorrect
-            answerDetails += `<p>Q2: Incorrect answer: ${q2Answer}</p>`;
+            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'red';
+            answerDetails += `<p>Q2: Incorrect</p>`;
         }
     
-        // Question 3 (checkboxes)
+        // ===== Question 3 =====
         const q3Answers = [...document.querySelectorAll('input[name="q3"]:checked')].map(i => i.value);
+        const q3Correct = correctAnswers.q3;
+        const q3ScorePerCorrect = 1 / q3Correct.length; // 1 point max, divide by 2
+        q3Answers.forEach(ans => {
+            if (q3Correct.includes(ans)) {
+                score += q3ScorePerCorrect;
+            }
+        });
         document.querySelectorAll('input[name="q3"]').forEach(input => {
-            if (correctAnswers.q3.includes(input.value)) {
+            if (q3Correct.includes(input.value)) {
                 input.parentElement.style.color = 'green';
             } else if (input.checked) {
                 input.parentElement.style.color = 'red';
             }
         });
-        const allCorrectQ3 = q3Answers.every(val => correctAnswers.q3.includes(val));
-        const noExtraQ3 = q3Answers.length === correctAnswers.q3.length;
-        if (allCorrectQ3 && noExtraQ3) {
-            score++;
-            answerDetails += `<p>Q3: Correct</p>`;
-        } else {
-            answerDetails += `<p>Q3: Incorrect</p>`;
-        }
+        answerDetails += `<p>Q3: You got ${q3Answers.filter(a => q3Correct.includes(a)).length}/${q3Correct.length} correct</p>`;
     
-        // Update the result and score display without using innerHTML
-        resultFooter.textContent = `⏱️ Time's up! Your score: ${score} / ${totalQuestions}`;
-    
-        // Use textContent to update score
-        scoreDisplay.textContent = `Final Score: ${score} / ${totalQuestions}`;
-        const detailedAnswers = `\n${answerDetails}`;
-        scoreDisplay.textContent += detailedAnswers; // Append detailed answers to the score
-    
-        console.log(`Final Score: ${score}`); // Log score for debugging
+        // Final formatting and result
+        score = Math.round(score * 100) / 100; // Round to 2 decimals if needed
+        resultFooter.innerHTML = `<strong>Total Score: ${score.toFixed(2)} / 3</strong>` + answerDetails;
+        document.getElementById("grade").value = score;
+        scoreDisplay.innerHTML = answerDetails;
+        disableInputs();
     };
     
     

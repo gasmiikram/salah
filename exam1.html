@@ -141,198 +141,153 @@
 
     </div>
 
-    <!-- External Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script defer src="Etudjs.js"></script>
-
     <script>
-      // Timer countdown
-      let totalSeconds = 60;
-      const timerElement = document.getElementById('timer');
-      const resultFooter = document.getElementById('result');
-      const submitButton = document.getElementById('submit-btn');
-      const scoreDisplay = document.getElementById('score-display');
-  
-      const disableInputs = () => {
-          document.querySelectorAll('input').forEach(input => input.disabled = true);
-      };
-  
-      const calculateScore = () => {
-        let score = 0;
-        const totalQuestions = 3; // Total number of questions
-    
-        // Correct answers for each question
-        const correctAnswers = {
-            q1: ['4'], // Correct answers for Question 1 (checkboxes)
-            q2: 'false', // Correct answer for Question 2 (radio button)
-            q3: ['Python'] // Correct answers for Question 3 (checkboxes)
-        };
-    
-        // Reset previous styles before checking
-        document.querySelectorAll('input').forEach(input => {
-            input.parentElement.style.color = ''; // Reset previous styles
-        });
-    
-        let answerDetails = '';
-    
-        // Question 1 (checkboxes)
-      // === Question 1 ===
-const q1Answers = [...document.querySelectorAll('input[name="q1"]:checked')].map(i => i.value);
-document.querySelectorAll('input[name="q1"]').forEach(input => {
-    if (correctAnswers.q1.includes(input.value)) {
-        input.parentElement.style.color = 'green';
-    } else if (input.checked) {
-        input.parentElement.style.color = 'red';
-    }
-});
-const allCorrectQ1 = q1Answers.every(val => correctAnswers.q1.includes(val));
-const noExtraQ1 = q1Answers.length === correctAnswers.q1.length;
-if (allCorrectQ1 && noExtraQ1 ) {
-    score++;
-    answerDetails += `<p>Q1: Correct</p>`;
-} else {
-    answerDetails += `<p>Q1: Incorrect</p>`;
-}
+        let totalSeconds = 60;
+        const timerElement = document.getElementById('timer');
+        const resultFooter = document.getElementById('result');
+        const submitButton = document.getElementById('submit-btn');
+        const scoreDisplay = document.getElementById('score-display');
+        const gradeInput = document.getElementById('grade');
         
-    
-        // Question 2 (radio button)
-        const q2Answer = document.querySelector('input[name="q2"]:checked')?.value;
-        if (q2Answer === correctAnswers.q2) {
-            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'green'; // Correct
-            score++;
-            answerDetails += `<p>Q2: Correct answer: ${q2Answer}</p>`;
-        } else if (q2Answer) {
-            document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'red'; // Incorrect
-            answerDetails += `<p>Q2: Incorrect answer: ${q2Answer}</p>`;
+        // Check if there's existing data in localStorage
+        const storedScore = localStorage.getItem('score');
+        const storedExamName = localStorage.getItem('exam_name');
+        
+        if (storedScore) {
+            // If there's stored score data, show it on the page
+            scoreDisplay.textContent = `Final Score: ${storedScore} / 3`;
+            gradeInput.value = storedScore;
+            resultFooter.textContent = `⏱️ Time's up! Your score: ${storedScore} / 3`;
         }
     
-       // === Question 3 ===
-const q3Answers = [...document.querySelectorAll('input[name="q3"]:checked')].map(i => i.value);
-document.querySelectorAll('input[name="q3"]').forEach(input => {
-    if (correctAnswers.q3.includes(input.value)) {
-        input.parentElement.style.color = 'green';
-    } else if (input.checked) {
-        input.parentElement.style.color = 'red';
-    }
-});
-const allCorrectQ3 = q3Answers.every(val => correctAnswers.q3.includes(val));
-const noExtraQ3 = q3Answers.length === correctAnswers.q3.length;
-if (allCorrectQ3 && noExtraQ3) {
-    score++;
-    answerDetails += `<p>Q3: Correct</p>`;
-} else {
-    answerDetails += `<p>Q3: Incorrect</p>`;
-}
+        // Disable all input fields when the time is up or when the form is submitted
+        const disableInputs = () => {
+            document.querySelectorAll('input').forEach(input => input.disabled = true);
+        };
+        
+        // Calculate score and submit the form
+        const calculateAndSubmit = () => {
+            let score = 0;
+            const totalQuestions = 3;
+            
+            // Define correct answers for each question
+            const correctAnswers = {
+                q1: ['4'],
+                q2: 'false',
+                q3: ['Python']
+            };
     
-        // Update the result and score display without using innerHTML
-        resultFooter.textContent = `⏱️ Time's up! Your score: ${score} / ${totalQuestions}`;
+            // Reset all question colors
+            document.querySelectorAll('input').forEach(input => {
+                input.parentElement.style.color = ''; 
+            });
     
-        // Use textContent to update score
-        scoreDisplay.textContent = `Final Score: ${score} / ${totalQuestions}`;
-        const detailedAnswers = `\n${answerDetails}`;
-        scoreDisplay.textContent += detailedAnswers; // Append detailed answers to the score
+            let answerDetails = '';
     
-        console.log(`Final Score: ${score}`); // Log score for debugging
-    };
-    
-    
-    // Get remaining time from localStorage
-let storedTime = localStorage.getItem('remainingTime');
-if (storedTime !== null) {
-    totalSeconds = parseInt(storedTime, 10);
-} else {
-    totalSeconds = 60; // Default start time
-}
-
-    const countdown = setInterval(() => {
-      let minutes = Math.floor(totalSeconds / 60);
-      let seconds = totalSeconds % 60;
-      timerElement.textContent = `00:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-      
-      // Save to localStorage
-      localStorage.setItem('remainingTime', totalSeconds);
-  
-      totalSeconds--;
-  
-      if (totalSeconds < 0) {
-          clearInterval(countdown);
-          disableInputs();
-          calculateScore();
-          localStorage.removeItem('remainingTime'); // Clear stored time on finish
-      }
-  }, 1000);
-  
-  
-      // Submit button functionality
-      submitButton.addEventListener('click', () => {
-        clearInterval(countdown);
-        disableInputs();
-        calculateScore();
-        localStorage.removeItem('remainingTime'); // clear saved timer
-        localStorage.clear(); // clear answers
-    });
-    
-      function calculateAndSubmit() {
-        let score = 0;
-        const total = 3;
-    
-        const q1 = document.querySelector('input[name="q1"]:checked');
-        if (q1 && q1.value === "4") score++;
-    
-        const q2 = document.querySelector('input[name="q2"]:checked');
-        if (q2 && q2.value === "false") score++;
-    
-        const q3 = document.querySelector('input[name="q3"][value="Python"]');
-        if (q3 && q3.checked) score++;
-    
-        const grade = ((score / total) * 100).toFixed(2);
-    
-        document.getElementById("score-display").innerText = `Your Score: ${grade}%`;
-        document.getElementById("grade").value = grade;
-    
-        // Finally, submit the form manually
-        document.getElementById("exam-form").action = "submit_note.php";
-        document.getElementById("exam-form").submit();
-      }
-      
-  </script>
-  
-  <script>
-    // Save checkbox and radio values
-    document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('change', () => {
-            if (input.type === 'checkbox') {
-                const checked = [...document.querySelectorAll(`input[name="${input.name}"]:checked`)].map(i => i.value);
-                localStorage.setItem(input.name, JSON.stringify(checked));
-            } else if (input.type === 'radio') {
-                localStorage.setItem(input.name, input.value);
+            // Q1: Handle answers for question 1
+            const q1Answers = [...document.querySelectorAll('input[name="q1"]:checked')].map(i => i.value);
+            document.querySelectorAll('input[name="q1"]').forEach(input => {
+                if (correctAnswers.q1.includes(input.value)) {
+                    input.parentElement.style.color = 'green'; // Correct answer
+                } else if (input.checked) {
+                    input.parentElement.style.color = 'red'; // Incorrect answer
+                }
+            });
+            const allCorrectQ1 = q1Answers.every(val => correctAnswers.q1.includes(val));
+            const noExtraQ1 = q1Answers.length === correctAnswers.q1.length;
+            if (allCorrectQ1 && noExtraQ1) {
+                score++;
+                answerDetails += `Q1: Correct\n`;
+            } else {
+                answerDetails += `Q1: Incorrect\n`;
             }
-        });
-    });
-
-    // Restore saved answers on load
-    window.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('input').forEach(input => {
-            if (input.type === 'checkbox') {
-                const saved = JSON.parse(localStorage.getItem(input.name) || '[]');
-                if (saved.includes(input.value)) input.checked = true;
-            } else if (input.type === 'radio') {
-                const saved = localStorage.getItem(input.name);
-                if (saved === input.value) input.checked = true;
+    
+            // Q2: Handle answers for question 2
+            const q2Answer = document.querySelector('input[name="q2"]:checked')?.value;
+            if (q2Answer === correctAnswers.q2) {
+                document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'green';
+                score++;
+                answerDetails += `Q2: Correct\n`;
+            } else if (q2Answer) {
+                document.querySelector(`input[name="q2"][value="${q2Answer}"]`).parentElement.style.color = 'red';
+                answerDetails += `Q2: Incorrect\n`;
             }
-        });
-    });
-    submitButton.addEventListener('click', () => {
-      clearInterval(countdown);
-      disableInputs();
-      calculateScore();
-      localStorage.clear(); // <== this line clears answers
-  });
-  
-</script>
-
+    
+            // Q3: Handle answers for question 3
+            const q3Answers = [...document.querySelectorAll('input[name="q3"]:checked')].map(i => i.value);
+            document.querySelectorAll('input[name="q3"]').forEach(input => {
+                if (correctAnswers.q3.includes(input.value)) {
+                    input.parentElement.style.color = 'green';
+                } else if (input.checked) {
+                    input.parentElement.style.color = 'red';
+                }
+            });
+            const allCorrectQ3 = q3Answers.every(val => correctAnswers.q3.includes(val));
+            const noExtraQ3 = q3Answers.length === correctAnswers.q3.length;
+            if (allCorrectQ3 && noExtraQ3) {
+                score++;
+                answerDetails += `Q3: Correct\n`;
+            } else {
+                answerDetails += `Q3: Incorrect\n`;
+            }
+    
+            // Display results
+            resultFooter.textContent = `⏱️ Time's up! Your score: ${score} / ${totalQuestions}`;
+            scoreDisplay.textContent = `Final Score: ${score} / ${totalQuestions}`;
+            gradeInput.value = score;  // Set the score in the grade input field
+    
+            disableInputs();  // Disable all inputs
+    
+            // Save exam data in localStorage
+            localStorage.setItem('score', score);
+            localStorage.setItem('exam_name', 'wad');  // Store exam name as well
+    
+            // Prepare form data to include exam_name and grade
+            const formData = new FormData(document.getElementById("exam-form"));
+            formData.append('exam_name', 'wad');  // You can make this dynamic as needed
+            formData.append('grade', score);
+    
+            // Submit the form via AJAX (using fetch)
+            fetch('submit_note.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(text => {
+                console.log("🚨 Raw response from PHP:", text);
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        resultFooter.textContent += ' Submission saved.';
+                    } else {
+                        resultFooter.textContent += ' Submission failed: ' + data.message;
+                    }
+                } catch (err) {
+                    resultFooter.textContent += '  Invalid JSON from server.';
+                    console.error(" JSON parse error:", err);
+                }
+            })
+            .catch(error => {
+                resultFooter.textContent += '  Network error: ' + error;
+            });
+        };
+        
+        // Timer countdown logic
+        const countdown = setInterval(() => {
+            totalSeconds--;
+            const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+            const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+            timerElement.textContent = `00:${minutes}:${seconds}`;
+    
+            if (totalSeconds <= 0) {
+                clearInterval(countdown);
+                calculateAndSubmit();
+            }
+        }, 1000);
+    </script>
+    
+    
+        
 </body>
 
 </html>
